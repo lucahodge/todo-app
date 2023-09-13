@@ -14,33 +14,47 @@ struct ContentView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
+    
+//    @State var isPresentingNewNoteView = false
+//    @State var newItem = false
+    
     private var items: FetchedResults<Item>
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+            VStack{
+                List {
+                    ForEach(items) { item in
+                        NavigationLink {
+//                            Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                            EditNoteView(passedItem: item)
+                        } label: {
+                            Text(item.timestamp!, formatter: itemFormatter)
+                        }
+                    }
+                    .onDelete(perform: deleteItems)
+                }
+                .toolbar {
+    #if os(iOS)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+    #endif
+                    ToolbarItem {
+                        Button(action: addItem) {
+                            Label("Add Item", systemImage: "plus")
+                        }
                     }
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                Button(action: {}){
+                    Image(systemName: "plus.circle.fill")
                 }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+//                Image(systemName: "location.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .title1)
+//                    )
+
+//                Text("Select an item")
             }
-            Text("Select an item")
+            
         }
     }
 
@@ -48,6 +62,7 @@ struct ContentView: View {
         withAnimation {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
+            newItem.text = "hey"
 
             do {
                 try viewContext.save()

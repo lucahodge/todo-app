@@ -16,6 +16,7 @@
 		19B8BB032AB2668B00F705F7 /* TodoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B8BB022AB2668B00F705F7 /* TodoListTests.swift */; };
 		19B8BB0D2AB2668B00F705F7 /* TodoListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B8BB0C2AB2668B00F705F7 /* TodoListUITests.swift */; };
 		19B8BB0F2AB2668B00F705F7 /* TodoListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B8BB0E2AB2668B00F705F7 /* TodoListUITestsLaunchTests.swift */; };
+		19B8BB1C2AB26A0B00F705F7 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B8BB1B2AB26A0B00F705F7 /* EditNoteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		19B8BB082AB2668B00F705F7 /* TodoListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodoListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		19B8BB0C2AB2668B00F705F7 /* TodoListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListUITests.swift; sourceTree = "<group>"; };
 		19B8BB0E2AB2668B00F705F7 /* TodoListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		19B8BB1B2AB26A0B00F705F7 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				19B8BAEB2AB2668A00F705F7 /* TodoListApp.swift */,
 				19B8BAED2AB2668A00F705F7 /* Persistence.swift */,
 				19B8BAF22AB2668A00F705F7 /* ContentView.swift */,
+				19B8BB1B2AB26A0B00F705F7 /* EditNoteView.swift */,
 				19B8BAF42AB2668B00F705F7 /* Assets.xcassets */,
 				19B8BAF62AB2668B00F705F7 /* TodoList.entitlements */,
 				19B8BAEF2AB2668A00F705F7 /* TodoList.xcdatamodeld */,
@@ -268,6 +271,7 @@
 				19B8BAEC2AB2668A00F705F7 /* TodoListApp.swift in Sources */,
 				19B8BAEE2AB2668A00F705F7 /* Persistence.swift in Sources */,
 				19B8BAF32AB2668A00F705F7 /* ContentView.swift in Sources */,
+				19B8BB1C2AB26A0B00F705F7 /* EditNoteView.swift in Sources */,
 				19B8BAF12AB2668A00F705F7 /* TodoList.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
