@@ -46,9 +46,12 @@ struct ContentView: View {
                         }
                     }
                 }
-                Button(action: {}){
+                NavigationLink(destination: EditNoteView(passedItem: nil)){
                     Image(systemName: "plus.circle.fill")
                 }
+//                Button(action: {}){
+//                    Image(systemName: "plus.circle.fill")
+//                }
 //                Image(systemName: "location.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .title1)
 //                    )
 
