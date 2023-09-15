@@ -12,18 +12,22 @@ struct EditNoteView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
 //    @State var item : Item?
-    @State var selectedItem : Item? = nil
+    private var selectedItem : Item?
     @State var text : String
     init(passedItem : Item?){
-        if let selectedItem = passedItem {
-//            if selectedItem.text == nil {
+//        if let selectedItem = passedItem {
+        if passedItem != nil {
+            selectedItem = passedItem
+        
+//            if passedItem!.text == nil {
 //                _text = State(initialValue: "passed")
 //            } else {
-//                _text = State(initialValue: selectedItem.text!)
+//                _text = State(initialValue: passedItem!.text!)
 //            }
-//            _text = State(initialValue: selectedItem.text ?? "passed")
-            _text = State(initialValue: "passed")
+            _text = State(initialValue: selectedItem!.text ?? "passed")
+//            _text = State(initialValue: "passed")
         } else {
+            selectedItem = nil
             _text = State(initialValue: "no passed")
         }
 //        _text = State(initialValue: "fail")
@@ -84,11 +88,37 @@ struct EditNoteView: View {
 }
 
 struct EditNoteView_Previews: PreviewProvider {
+//    let persistenceController = PersistenceController.shared
+//    @FetchRequest(
+//        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+//        animation: .default)
+//    private var items: FetchedResults<Item>
+    
+    static var firstItem: Item? {
+        let context = PersistenceController.preview.container.viewContext
+        let fetchRequest = Item.fetchRequest()
+        fetchRequest.fetchLimit = 1
+        let results = try? context.fetch(fetchRequest)
+        return results?.first
+    }
+
     static var previews: some View {
         VStack{
-            EditNoteView(passedItem: Item()).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-            EditNoteView(passedItem: nil).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            if let firstItem {
+                EditNoteView(passedItem: firstItem)
+                    .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+
+            }
+            else {
+                Text("Item not found")
+            }
+            
+//                EditNoteView(passedItem: Item())
+//                    .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            
+            //            EditNoteView(passedItem: nil).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
+//        .environment(\.managedObjectContext, persistenceController.container.viewContext)
 
     }
 }
