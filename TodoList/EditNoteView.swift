@@ -25,6 +25,7 @@ struct EditNoteView: View {
     }
     var body: some View {
         Form{
+            Text(selectedItem == nil ? "nope" : String( selectedItem!.timestamp!.timeIntervalSinceNow))
             Section(header: Text("TODO")){
                 TextField("Discription", text: $text, axis: .vertical)
     //                .textFieldStyle(.roundedBorder)
@@ -48,6 +49,8 @@ struct EditNoteView: View {
             }
         }
         .navigationTitle(selectedItem == nil ? "New Note" : "Edit Note")
+        .scrollContentBackground(.hidden)
+        .background(selectedItem == nil ? newTodoColor() : todoColor(date: selectedItem!.timestamp!))
     }
     
     private let itemFormatter: DateFormatter = {

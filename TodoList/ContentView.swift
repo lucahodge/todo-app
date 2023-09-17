@@ -14,27 +14,39 @@ struct ContentView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
-    
-//    @State var isPresentingNewNoteView = false
-//    @State var newItem = false
-    
     private var items: FetchedResults<Item>
+    
+//    private let colors = [Color.white, Color.green, Color.yellow, Color.orange, Color.red]
+    
 
     var body: some View {
         NavigationView {
             VStack{
                 List {
-                    ForEach(items) { item in
-                        NavigationLink {
-//                            Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                            EditNoteView(passedItem: item)
-                        } label: {
-//                            Text(item.timestamp!, formatter: itemFormatter)
-                            Text(item.text ?? "")
+                    
+                        ForEach(items) { item in
+                            NavigationLink {
+                                //                            Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                                EditNoteView(passedItem: item)
+                            } label: {
+                                //                            Text(item.timestamp!, formatter: itemFormatter)
+                                Text(item.text ?? "")
+                            }
+                            
+                            
+                            //                        .listStyle(.insetGrouped)
+                            //                        .overlay(RoundedRectangle(cornerRadius: 10, style: .circular).stroke(Color(uiColor: .tertiaryLabel), lineWidth: 1))
+                            .listRowBackground(todoColor(date: item.timestamp!))
                         }
-                    }
-                    .onDelete(perform: deleteItems)
+                        .onDelete(perform: deleteItems)
+                    
                 }
+                
+//                .listStyle(.insetGrouped)
+                .scrollContentBackground(.hidden)
+//                .listBackground(Color.blue)
+//                .backgroundColor(Color.purple)
+
                 .toolbar {
     #if os(iOS)
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -47,6 +59,7 @@ struct ContentView: View {
                         }
                     }
                 }
+                Text(String(items.count))
                 NavigationLink(destination: EditNoteView(passedItem: nil)){
                     Image(systemName: "plus.circle.fill")
                 }
@@ -58,9 +71,14 @@ struct ContentView: View {
 
 //                Text("Select an item")
             }
-            
+            .accentColor(Color.black)
+            .background(appColor(number: items.count))
+//            .background(Col)
+//            .background(UIColor(appColor(number: items.count)).withAlphaComponent(0.5))
         }
+        .navigationTitle("hi there")
     }
+    
 
     private func addItem() {
         withAnimation {
