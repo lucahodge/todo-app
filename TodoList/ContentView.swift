@@ -29,7 +29,8 @@ struct ContentView: View {
 //                            Text("Item at \(item.timestamp!, formatter: itemFormatter)")
                             EditNoteView(passedItem: item)
                         } label: {
-                            Text(item.timestamp!, formatter: itemFormatter)
+//                            Text(item.timestamp!, formatter: itemFormatter)
+                            Text(item.text ?? "")
                         }
                     }
                     .onDelete(perform: deleteItems)

@@ -11,26 +11,17 @@ struct EditNoteView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-//    @State var item : Item?
     private var selectedItem : Item?
     @State var text : String
+    
     init(passedItem : Item?){
-//        if let selectedItem = passedItem {
         if passedItem != nil {
             selectedItem = passedItem
-        
-//            if passedItem!.text == nil {
-//                _text = State(initialValue: "passed")
-//            } else {
-//                _text = State(initialValue: passedItem!.text!)
-//            }
-            _text = State(initialValue: selectedItem!.text ?? "passed")
-//            _text = State(initialValue: "passed")
+            _text = State(initialValue: selectedItem!.text ?? "")
         } else {
             selectedItem = nil
-            _text = State(initialValue: "no passed")
+            _text = State(initialValue: "")
         }
-//        _text = State(initialValue: "fail")
     }
     var body: some View {
         Form{
@@ -41,6 +32,12 @@ struct EditNoteView: View {
     //                .multilineTextAlignment(.leading)
 
             }
+            if selectedItem != nil {
+                Section(header: Text("Date created")){
+                    Text(selectedItem!.timestamp!, formatter: itemFormatter)
+                }
+            }
+            
             Section{
                 Button(action: saveAction){
                     Text("save")
@@ -50,7 +47,15 @@ struct EditNoteView: View {
                         
             }
         }
+        .navigationTitle(selectedItem == nil ? "New Note" : "Edit Note")
     }
+    
+    private let itemFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .medium
+        return formatter
+    }()
     
     func saveAction()
     {
@@ -68,9 +73,15 @@ struct EditNoteView: View {
 //            self.presentationMode.wrappedValue.dismiss()
 //        }
         withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-            newItem.text = "hey"
+            if selectedItem == nil {
+                let newItem = Item(context: viewContext)
+                newItem.timestamp = Date()
+                newItem.text = text
+            }
+            else {
+                selectedItem!.text = text
+            }
+                        
 
             do {
                 try viewContext.save()
