@@ -22,6 +22,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack{
+//                Text("Todo")
                 List {
                     
                         ForEach(items) { item in
@@ -47,19 +48,18 @@ struct ContentView: View {
 //                .listBackground(Color.blue)
 //                .backgroundColor(Color.purple)
 
-                .toolbar {
-    #if os(iOS)
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
-                    }
-    #endif
-                    ToolbarItem {
-                        Button(action: addItem) {
-                            Label("Add Item", systemImage: "plus")
-                        }
-                    }
-                }
-                Text(String(items.count))
+//                .toolbar {
+//    #if os(iOS)
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        EditButton()
+//                    }
+//    #endif
+//                    ToolbarItem {
+//                        Button(action: addItem) {
+//                            Label("Add Item", systemImage: "plus")
+//                        }
+//                    }
+//                }
                 NavigationLink(destination: EditNoteView(passedItem: nil)){
                     Image(systemName: "plus.circle.fill")
                 }
@@ -71,12 +71,11 @@ struct ContentView: View {
 
 //                Text("Select an item")
             }
-            .accentColor(Color.black)
+//            .accentColor(Color.blue)
             .background(appColor(number: items.count))
-//            .background(Col)
-//            .background(UIColor(appColor(number: items.count)).withAlphaComponent(0.5))
+
         }
-        .navigationTitle("hi there")
+//        .navigationTitle("Todo List")
     }
     
 

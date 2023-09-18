@@ -25,14 +25,15 @@ struct EditNoteView: View {
     }
     var body: some View {
         Form{
-            Text(selectedItem == nil ? "nope" : String( selectedItem!.timestamp!.timeIntervalSinceNow))
+//            Text(selectedItem == nil ? "nope" : String( selectedItem!.timestamp!.timeIntervalSinceNow))
             Section(header: Text("TODO")){
-                TextField("Discription", text: $text, axis: .vertical)
-    //                .textFieldStyle(.roundedBorder)
-                    .lineLimit(5)
-    //                .multilineTextAlignment(.leading)
-
+                    TextField("Discription", text: $text, axis: .vertical)
+//                    .background(Color.blue)
+//                                    .textFieldStyle(.roundedBorder)
+                        .lineLimit(10)
+                    //                .multilineTextAlignment(.leading)
             }
+            
             if selectedItem != nil {
                 Section(header: Text("Date created")){
                     Text(selectedItem!.timestamp!, formatter: itemFormatter)
@@ -48,8 +49,10 @@ struct EditNoteView: View {
                         
             }
         }
+//        .background(Color.blue)
         .navigationTitle(selectedItem == nil ? "New Note" : "Edit Note")
         .scrollContentBackground(.hidden)
+//        .accentColor(Color.black)
         .background(selectedItem == nil ? newTodoColor() : todoColor(date: selectedItem!.timestamp!))
     }
     
