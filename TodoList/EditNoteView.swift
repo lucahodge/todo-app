@@ -11,15 +11,18 @@ struct EditNoteView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    private var selectedItem : Item?
+    @State private var selectedItem : Item?
+//    private var selectedItem : Item?
     @State var text : String
     
     init(passedItem : Item?){
         if passedItem != nil {
-            selectedItem = passedItem
-            _text = State(initialValue: selectedItem!.text ?? "")
+            _selectedItem = State(initialValue: passedItem)
+//            selectedItem = passedItem
+            _text = State(initialValue: passedItem!.text ?? "")
         } else {
-            selectedItem = nil
+            _selectedItem = State(initialValue: nil)
+//            selectedItem = nil
             _text = State(initialValue: "")
         }
     }
@@ -38,15 +41,23 @@ struct EditNoteView: View {
                 Section(header: Text("Date created")){
                     Text(selectedItem!.timestamp!, formatter: itemFormatter)
                 }
+                Section{
+                    Button(action: deleteItem){
+                        Text("Remove Note")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+//                    .buttonStyle(.borderedProminent)
+                }
             }
             
             Section{
                 Button(action: saveAction){
-                    Text("save")
+                    Text("Save")
                         .font(.headline)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
-                        
+//                .buttonStyle(.borderedProminent)
             }
         }
 //        .background(Color.blue)
@@ -65,19 +76,6 @@ struct EditNoteView: View {
     
     func saveAction()
     {
-//        withAnimation
-//        {
-//            if selectedItem == nil
-//            {
-//                selectedItem = Item(context: viewContext)
-//            }
-//
-//            selectedItem?.timestamp = Date()
-//            selectedItem?.text = text
-            
-//            dateHolder.saveContext(viewContext)
-//            self.presentationMode.wrappedValue.dismiss()
-//        }
         withAnimation {
             if selectedItem == nil {
                 let newItem = Item(context: viewContext)
@@ -100,6 +98,27 @@ struct EditNoteView: View {
         }
         self.presentationMode.wrappedValue.dismiss()
 
+    }
+    
+    private func deleteItem() {
+        withAnimation {
+//            offsets.map { items[$0] }.forEach(viewContext.delete)
+            if let item = selectedItem{
+//                print("Deleting item: \(item)")
+                viewContext.delete(item)
+                selectedItem = nil
+                do {
+                    try viewContext.save()
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    let nsError = error as NSError
+                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//                    print("Error saving context: \(error)")
+                }
+            }
+        }
+        self.presentationMode.wrappedValue.dismiss()
     }
 
 }

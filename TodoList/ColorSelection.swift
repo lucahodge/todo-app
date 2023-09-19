@@ -11,21 +11,22 @@ import SwiftUI
 
 let colorList = [Color.gray, Color.green, Color.yellow, Color.orange, Color.red]
 //let appColorList = [Color.gray, Color(red: 0.4, green: 0.7, blue: 0.4), Color(red: 0.8, green: 0.8, blue: 0.1), Color(red: 1, green: 0.6, blue: 0.4), Color(red: 0.8, green: 0.4, blue: 0.4)]
-let appColorList = [Color(red: 200/255, green: 200/255, blue: 200/255), Color(red: 176/255, green: 255/255, blue: 172/255), Color(red: 251/255, green: 255/255, blue: 127/255), Color(red: 255/255, green: 186/255, blue: 115/255), Color(red: 254/255, green: 102/255, blue: 102/255)]
+let appColorList = [Color(red: 230/255, green: 230/255, blue: 230/255), Color(red: 176/255, green: 255/255, blue: 172/255), Color(red: 251/255, green: 255/255, blue: 127/255), Color(red: 255/255, green: 186/255, blue: 115/255), Color(red: 254/255, green: 102/255, blue: 102/255)]
 
 //145, 255, 0
 
 func appColor(number: Int) -> Color{
+    let increment = 4;
     if number == 0 {
         return appColorList[0]
     }
-    if number <= 4 {
+    if number <= increment {
         return appColorList[1]
     }
-    if number <= 8 {
+    if number <= increment*2 {
         return appColorList[2]
     }
-    if number <= 12 {
+    if number <= increment*3 {
         return appColorList[3]
     }
     return appColorList[4]

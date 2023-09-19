@@ -21,48 +21,72 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            VStack{
-//                Text("Todo")
-                List {
-                    
-                        ForEach(items) { item in
-                            NavigationLink {
-                                //                            Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                                EditNoteView(passedItem: item)
-                            } label: {
-                                //                            Text(item.timestamp!, formatter: itemFormatter)
-                                Text(item.text ?? "")
+            ZStack{
+                if items.count == 0 {
+                    Text("No notes")
+                }
+                    List {
+                        
+                            ForEach(items) { item in
+                                NavigationLink {
+                                    //                            Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                                    EditNoteView(passedItem: item)
+                                } label: {
+                                    //                            Text(item.timestamp!, formatter: itemFormatter)
+                                    Text(item.text ?? "")
+                                }
+                                
+                                
+                                //                        .listStyle(.insetGrouped)
+                                //                        .overlay(RoundedRectangle(cornerRadius: 10, style: .circular).stroke(Color(uiColor: .tertiaryLabel), lineWidth: 1))
+                                .listRowBackground(todoColor(date: item.timestamp!))
                             }
-                            
-                            
-                            //                        .listStyle(.insetGrouped)
-                            //                        .overlay(RoundedRectangle(cornerRadius: 10, style: .circular).stroke(Color(uiColor: .tertiaryLabel), lineWidth: 1))
-                            .listRowBackground(todoColor(date: item.timestamp!))
+                            .onDelete(perform: deleteItems)
+                        
+                    }
+    //                .listStyle(.insetGrouped)
+                    .scrollContentBackground(.hidden)
+    //                .listBackground(Color.blue)
+    //                .backgroundColor(Color.purple)
+
+    //                .toolbar {
+    //    #if os(iOS)
+    //                    ToolbarItem(placement: .navigationBarTrailing) {
+    //                        EditButton()
+    //                    }
+    //    #endif
+    //                    ToolbarItem {
+    //                        Button(action: addItem) {
+    //                            Label("Add Item", systemImage: "plus")
+    //                        }
+    //                    }
+    //                }
+
+                
+
+                VStack(){
+                    Spacer()
+                    HStack(){
+                        Spacer()
+                        NavigationLink(destination: EditNoteView(passedItem: nil)){
+                            HStack{
+                                Image(systemName: "plus.circle.fill")
+                                Text("New Note").font(.headline)
+                            }
                         }
-                        .onDelete(perform: deleteItems)
-                    
+                        .padding(15)
+//                        .foregroundColor(.white)
+//                        .background(Color.accentColor)
+                        .foregroundColor(Color.accentColor)
+                        .background(.white)
+                        .cornerRadius(30)
+                        .padding(30)
+//                        .shadow(color: .black.opacity(0.3), radius: 3, x: 3, y: 3)
+        //                .buttonStyle(.bordered)
+        //                .buttonStyle(.borderedProminent)
+                    }
                 }
                 
-//                .listStyle(.insetGrouped)
-                .scrollContentBackground(.hidden)
-//                .listBackground(Color.blue)
-//                .backgroundColor(Color.purple)
-
-//                .toolbar {
-//    #if os(iOS)
-//                    ToolbarItem(placement: .navigationBarTrailing) {
-//                        EditButton()
-//                    }
-//    #endif
-//                    ToolbarItem {
-//                        Button(action: addItem) {
-//                            Label("Add Item", systemImage: "plus")
-//                        }
-//                    }
-//                }
-                NavigationLink(destination: EditNoteView(passedItem: nil)){
-                    Image(systemName: "plus.circle.fill")
-                }
 //                Button(action: {}){
 //                    Image(systemName: "plus.circle.fill")
 //                }
